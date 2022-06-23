@@ -1,11 +1,11 @@
 var highScoreButton = document.querySelector(".high-score-button")
-var Time = document.querySelector(".Timer")
+var timer = document.querySelector(".timer")
 var startQuiz = document.querySelector("#start-quiz-button")
 var startBox = document.querySelector("#intro-screen")
 var questionBox = document.getElementById('question-screen')
 var questionIndex = 0;
 var secondsLeft = 60;
-var timer = document.querySelector("#timerid");
+var timerID;
 var questions = [
    {
     // questions[0]
@@ -32,8 +32,8 @@ function beginQuiz() {
     startBox.classList.add("hide")
     questionBox.style.display = 'block'
     populateQuestions();
-    // setTimer()
-
+    timer.textContent = "60";
+    timerID = setInterval(timerFunction, 1000)
 }
 
 function populateQuestions() {
@@ -41,31 +41,24 @@ function populateQuestions() {
     document.getElementById('answer1').textContent = questions[questionIndex].potentinalAnswers[0]
     document.getElementById('answer2').textContent = questions[questionIndex].potentinalAnswers[1]
     document.getElementById('answer3').textContent = questions[questionIndex].potentinalAnswers[2]
-    document.getElementById('answer4').textContent = questions[questionIndex].potentinalAnswers[3]
-
-   
+    document.getElementById('answer4').textContent = questions[questionIndex].potentinalAnswers[3]   
 }
 
 function checkingAnswer() {
 // evaluate the user answer
     questionIndex += 1
     populateQuestions()
-
 }
 
 // need an end game function
 
 // need a timer running in the background
-// function setTimer(){
-//     timerInterval = setInterval(function(){
-//         secondsLeft--;
-//         timer.textcontent = secondsLeft;
 
-        
-    
-//     }, 1000);
-// }
 
+ function timerFunction() {
+      secondsLeft--;
+     timer.textcontent = secondsLeft;    
+ }
 
 startQuiz.addEventListener("click", beginQuiz);
 document.getElementById('answer1').addEventListener('click', checkingAnswer)
