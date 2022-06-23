@@ -4,7 +4,9 @@ var startBox = document.querySelector("#intro-screen")
 var questionBox = document.getElementById('question-screen')
 var questionIndex = 0;
 var secondsLeft = 60;
+var timerInterval
 var timer = document.getElementById("timerid");
+var createSubmit = document.createElement("button");
 var questions = [
    {
     // questions[0]
@@ -40,6 +42,11 @@ function populateQuestions() {
     document.getElementById('answer2').textContent = questions[questionIndex].potentinalAnswers[1]
     document.getElementById('answer3').textContent = questions[questionIndex].potentinalAnswers[2]
     document.getElementById('answer4').textContent = questions[questionIndex].potentinalAnswers[3]   
+
+    if(questions.length <= questionIndex){
+        endQuiz()
+        return
+    }
 }
 
 function checkingAnswer() {
@@ -50,16 +57,28 @@ function checkingAnswer() {
 
 // need a timer running in the background
 
- function setTimer() {
-    setInterval(function(){
-      secondsLeft--;
-     timer.innerHTML = secondsLeft;
+function setTimer() {
+    timerInterval = setInterval(function(){
+    secondsLeft--;
+    timer.innerHTML = secondsLeft;
+
+    if(secondsLeft <= 0) {
+        // sopt the timer on endgame or seconds left 0 
+    endQuiz()
+    }
 
  }, 1000);
 }
 
+function endQuiz() {
+    clearInterval(timerInterval)
+    questionBox.classList.add("hide")
+
+}
+ 
 startQuiz.addEventListener("click", beginQuiz);
 document.getElementById('answer1').addEventListener('click', checkingAnswer)
 document.getElementById('answer2').addEventListener('click', checkingAnswer)
 document.getElementById('answer3').addEventListener('click', checkingAnswer)
 document.getElementById('answer4').addEventListener('click', checkingAnswer)
+
